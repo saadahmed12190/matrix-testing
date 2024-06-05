@@ -24,12 +24,12 @@ jobs:
       matrix:
         vars: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    # steps:
+    # - name: Checkout repository
+    #   uses: actions/checkout@v2
 
-    - name: Echo variables
-      run: |
-        var_name=$(echo ${{ toJson(matrix.vars) }} | jq -r 'keys[0]')
-        var_value=$(echo ${{ toJson(matrix.vars) }} | jq -r '.[].$var_name')
-        echo "$var_name is $var_value"
+    # - name: Echo variables
+    #   run: |
+    #     var_name=$(echo ${{ toJson(matrix.vars) }} | jq -r 'keys[0]')
+    #     var_value=$(echo ${{ toJson(matrix.vars) }} | jq -r '.[].$var_name')
+    #     echo "$var_name is $var_value"
