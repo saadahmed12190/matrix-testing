@@ -30,6 +30,6 @@ jobs:
 
     - name: Echo variables
       run: |
-        for var in ${{ toJson(matrix.vars) }}; do
-          echo "$var is ${{ matrix.vars[var] }}"
-        done
+        var_name=$(echo ${{ toJson(matrix.vars) }} | jq -r 'keys[0]')
+        var_value=$(echo ${{ toJson(matrix.vars) }} | jq -r '.[].$var_name')
+        echo "$var_name is $var_value"
