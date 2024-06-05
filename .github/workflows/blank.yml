@@ -1,0 +1,22 @@
+name: VPC Creation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create_vpc:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        vpc_name: [vpc-1, vpc2, vpc3]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Create VPC
+      run: |
+        echo "VPC's are ${{matrix.vpc_name}}"
