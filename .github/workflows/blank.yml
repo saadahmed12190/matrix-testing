@@ -30,6 +30,8 @@ jobs:
 
     - name: Echo variables
       run: |
-        var_name=$(echo ${{toJson(matrix.vars)}} | jq -r 'keys[0]')
-    #     var_value=$(echo ${{ toJson(matrix.vars) }} | jq -r '.[].$var_name')
-    #     echo "$var_name is $var_value"
+          echo "JSON data:"
+          echo "${{ toJson(matrix.vars) }}"
+    #     var_name=$(echo ${{toJson(matrix.vars)}} | jq -r 'keys[0]')
+    # #     var_value=$(echo ${{ toJson(matrix.vars) }} | jq -r '.[].$var_name')
+    # #     echo "$var_name is $var_value"
