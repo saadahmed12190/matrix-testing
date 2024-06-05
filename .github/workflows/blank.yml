@@ -1,22 +1,35 @@
-name: VPC Creation
+name: Matrix Echo Example
 
-on:
-  push:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
-  create_vpc:
+  generate-matrix:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.generate.outputs.matrix }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
+    - name: Generate matrix
+      id: generate
+      run: |
+        python generate-matrix.py > matrix.json
+        echo "::set-output name=matrix::$(cat matrix.json)"
+
+  echo-matrix:
+    needs: generate-matrix
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        vpc_name: [vpc-1, vpc2, vpc3]
+        vars: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Create VPC
+    - name: Echo variables
       run: |
-        echo "VPC's are ${{matrix.vpc_name}}"
+        for var in ${{ toJson(matrix.vars) }}; do
+          echo "$var is ${{ matrix.vars[var] }}"
+        done
