@@ -24,9 +24,9 @@ jobs:
       matrix:
         vars: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
 
-    # steps:
-    # - name: Checkout repository
-    #   uses: actions/checkout@v2
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
     # - name: Echo variables
     #   run: |
